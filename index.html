@@ -19,19 +19,12 @@ h1 .a{color:#5aa9ff}
 .stats{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 .stats span{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px 14px;font-size:13.5px;font-weight:700}
 .stats b{color:var(--gold);font-size:16px}
-.how{margin:26px 0 8px;border:2px solid var(--gold);border-radius:16px;background:linear-gradient(135deg,rgba(245,181,10,.14),rgba(37,99,235,.14));padding:18px 18px 20px}
-.how h2{margin:0 0 4px;font-size:clamp(18px,3.6vw,23px);font-weight:800}
-.how .sub{margin:0 0 14px;color:#d3dcec;font-size:14.5px}
-.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-.steps li{position:relative;background:rgba(10,20,40,.55);border:1px solid var(--line);border-radius:12px;padding:10px 12px 12px}
-.steps li:not(:last-child)::after{content:"▶";position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:14px;z-index:2}
-.steps .when{display:block;color:var(--gold);font-weight:800;font-size:13px}
-.steps b{display:block;font-size:16px;margin:2px 0}
-.steps p{margin:0;color:var(--muted);font-size:12.5px;line-height:1.55}
-.how .btn{display:block;margin-top:16px;text-align:center;background:var(--gold);color:#0b1626;font-weight:800;font-size:clamp(16px,3.6vw,19px);padding:14px 18px;border-radius:12px;text-decoration:none;box-shadow:0 6px 18px rgba(245,181,10,.35)}
+.how{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;margin:20px 0 4px;border:2px solid var(--gold);border-radius:14px;background:linear-gradient(135deg,rgba(245,181,10,.14),rgba(37,99,235,.14));padding:12px 14px}
+.how .msg{margin:0;flex:1 1 280px;font-size:clamp(15px,3.8vw,18px);font-weight:700;line-height:1.5}
+.how .msg b{color:var(--gold);margin-right:.5em}
+.how .btn{flex:0 0 auto;text-align:center;background:var(--gold);color:#0b1626;font-weight:800;font-size:16px;padding:11px 22px;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(245,181,10,.35)}
 .how .btn:hover{filter:brightness(1.08)}
 .how .btn:focus-visible,.book:focus-visible{outline:3px solid #fff;outline-offset:3px}
-.how .note{margin:10px 0 0;color:var(--muted);font-size:12.5px;text-align:center}
 h2.shelfhead{margin:34px 0 4px;font-size:clamp(19px,3.8vw,24px);font-weight:800}
 .shelfsub{margin:0 0 6px;color:var(--muted);font-size:14px}
 .shelf{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:8px 0 28px}
@@ -50,8 +43,7 @@ h2.shelfhead{margin:34px 0 4px;font-size:clamp(19px,3.8vw,24px);font-weight:800}
 footer{margin:6px 0 32px;color:var(--muted);font-size:12.5px;text-align:center}
 @media (min-width:700px){.shelf{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media (min-width:1000px){.shelf{grid-template-columns:repeat(5,minmax(0,1fr))}}
-@media (max-width:760px){.steps{grid-template-columns:1fr 1fr}.steps li:nth-child(2)::after{display:none}.steps li:nth-child(odd):not(:last-child)::after{right:-13px}}
-@media (max-width:540px){.lead{font-size:14px}.stats span{padding:3px 11px;font-size:12.5px}header.hero{padding-top:22px}.how{margin-top:18px;padding:14px 12px 16px}.steps{gap:8px}.steps li{padding:8px 10px 9px}.steps li:not(:last-child)::after{display:none}.steps b{font-size:14.5px}.steps p{display:none}.how .sub{font-size:13.5px;margin-bottom:10px}.book{padding:9px 6px 8px 13px}.book .t{font-size:8.5px;white-space:nowrap;letter-spacing:0}.book .n{font-size:21px;white-space:nowrap}.book .d{font-size:9.5px}.book .th{font-size:10px;margin-top:4px}.book .dots i{width:7px;height:7px}.cell{padding:16px 6px 24px}}
+@media (max-width:540px){.lead{font-size:14px}.stats span{padding:3px 11px;font-size:12.5px}header.hero{padding-top:22px}.how{margin-top:14px;padding:10px 12px;gap:8px}.how .btn{width:100%;padding:10px 16px}.book{padding:9px 6px 8px 13px}.book .t{font-size:8.5px;white-space:nowrap;letter-spacing:0}.book .n{font-size:21px;white-space:nowrap}.book .d{font-size:9.5px}.book .th{font-size:10px;margin-top:4px}.book .dots i{width:7px;height:7px}.cell{padding:16px 6px 24px}}
 </style>
 </head>
 <body>
@@ -63,17 +55,9 @@ footer{margin:6px 0 32px;color:var(--muted);font-size:12.5px;text-align:center}
 <div class="stats"><span>全 <b>14</b> 号</span><span>9 分野</span><span>毎週 発行</span><span>展示用サンプル記事 <b>71</b> 本</span></div>
 </header>
 
-<section class="how" aria-labelledby="how-h">
-<h2 id="how-h">⚙ この本棚は、毎週自動で増えていきます</h2>
-<p class="sub">本番では、担当者が不在でも止まらないよう、収集から公開・配信までを自動で回しています。</p>
-<ol class="steps">
-<li><span class="when">金曜 朝5時</span><b>集める・書く・検証</b><p>9分野の記事を集め、AIが要約と「現場の視点」を書き、自動で点検します。</p></li>
-<li><span class="when">金曜 昼13時</span><b>公開</b><p>点検に合格した号だけ、自動でWebに公開します。</p></li>
-<li><span class="when">月曜 朝8時</span><b>配信</b><p>社内チャットの掲示板に、案内を自動で投稿します。</p></li>
-<li><span class="when">いつでも</span><b>止められる</b><p>「今週は止める」ボタン1つで、その週を止められます。</p></li>
-</ol>
-<a class="btn" href="shikumi.html">しくみを詳しく見る（1分）→</a>
-<p class="note">データベースは使わず、ファイル（JSON・HTML・PDF）で管理しています。</p>
+<section class="how" aria-label="審査員の方へ">
+<p class="msg"><b>審査員の方へ</b>このナレッジは毎週自動で増えていきます。</p>
+<a class="btn" href="shikumi.html">仕組みを見る（1分）→</a>
 </section>
 
 <h2 class="shelfhead">📚 バックナンバー（全14号）</h2>
