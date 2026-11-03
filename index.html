@@ -42,7 +42,7 @@ h2.shelfhead{margin:34px 0 4px;font-size:clamp(19px,3.8vw,24px);font-weight:800}
 .book .new{position:absolute;top:-9px;right:-6px;background:var(--gold);color:#0b1626;font-size:11px;font-weight:800;padding:2px 9px;border-radius:999px;box-shadow:0 2px 6px rgba(0,0,0,.4)}
 footer{margin:6px 0 32px;color:var(--muted);font-size:12.5px;text-align:center}
 .bk-stage{position:fixed;inset:0;z-index:1000;overflow:hidden;cursor:pointer}
-.bk-stage .scene{position:absolute;inset:0;perspective:1600px}
+.bk-stage .scene{position:absolute;inset:0;perspective:2600px}
 .bk-stage .bk{position:absolute;transform-style:preserve-3d;transform-origin:center}
 .bk-stage .bk>*{position:absolute;inset:0}
 .bk-stage .base{background:linear-gradient(90deg,#d9dde6 0,#fff 7%);border-radius:3px 8px 8px 3px;box-shadow:0 18px 40px rgba(0,0,0,.55)}
@@ -146,7 +146,8 @@ footer{margin:6px 0 32px;color:var(--muted);font-size:12.5px;text-align:center}
     cover.appendChild(front);cover.appendChild(back);bk.appendChild(cover);
     a.style.visibility='hidden';
     st.addEventListener('click',next);
-    var s=Math.min(W*0.8/r.width,H*0.7/r.height,3.4),dx=W/2-(r.left+r.width/2)+r.width*s*0.18,dy=H/2-(r.top+r.height/2);
+    // 開いた本（見開き＝本2冊分の幅）が、どの画面でも横にも縦にもはみ出さない大きさにする。背表紙を画面の中央に置く
+    var s=Math.min(W*0.44/r.width,H*0.68/r.height,3.4),dx=W/2+r.width*s/2-(r.left+r.width/2),dy=H/2-(r.top+r.height/2);
     st.animate([{background:'rgba(8,14,26,0)'},{background:'rgba(8,14,26,.74)'}],{duration:420,fill:'forwards'});
     var lift=bk.animate([{transform:'none'},{transform:'translate('+dx+'px,'+dy+'px) scale('+s+')'}],{duration:480,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'});
     lift.onfinish=function(){

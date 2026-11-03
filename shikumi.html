@@ -44,7 +44,7 @@ footer{margin:40px 0 28px;color:var(--muted);font-size:13px;text-align:center}
 <h2>1週間の流れ</h2>
 <ol class="flow">
 <li><div class="when">金曜 朝5時</div><div class="card"><h3>収集</h3><p>9つの技術分野（AI・ロボット・特殊鋼・研削・切削・放電・治具・測定・金型）の業界紙やメーカー発表から、候補記事を集めます。記事は元のWebページの原文を直接読み込みます。</p></div></li>
-<li><div class="when">金曜 朝5時</div><div class="card"><h3>執筆</h3><p>AIエージェント（Claude Code の自動実行）が、記事を選び、AI要約と「現場の視点」コメントを書き、記事のアイコンを作ります。「現場の視点」は、加工現場の職人の見方をAIにあらかじめ覚えさせてから書かせています（AI秘書の講習で学んだ「自分トリセツ」の考え方の応用）。</p></div></li>
+<li><div class="when">金曜 朝5時</div><div class="card"><h3>執筆</h3><p>AIエージェント（Claude Code の自動実行）が、記事を選び、AI要約と「現場の視点」コメントを書き、記事のアイコンを作ります。「現場の視点」は、金属加工に長年携わってきた会社の理念や感覚を、会社のホームページの情報をもとに用意し、AIにあらかじめ覚えさせてから書かせています（AI秘書の講習で学んだ「自分トリセツ」の考え方に沿って整理しました）。</p></div></li>
 <li><div class="when">金曜 朝5時</div><div class="card"><h3>組み立て</h3><p>カテゴリ別のWebページ（HTML）と、掲示・配布用のPDFにレイアウトします。</p></div></li>
 <li><div class="when">金曜 朝5時</div><div class="card"><h3>自動検証</h3><p>ブラウザ自動操作（Playwright）で、表示崩れ・リンク切れ・禁止語の有無を点検します。合格した号だけが、次へ進みます。</p></div></li>
 <li><div class="when">金曜 昼13時</div><div class="card"><h3>自動公開</h3><p>合格した号を、Git（GitHub）へ自動で公開します。公開されたページが、そのままWebサイトになります（GitHub Pages）。</p></div></li>
