@@ -1135,10 +1135,14 @@
   .issue-nav .off { opacity:.35; pointer-events:none; }
   /* 本棚の本を開いて来たときだけ、白からふわっと中身が現れる */
   html.from-book::before { content:""; position:fixed; inset:0; background:#fff; z-index:9999; pointer-events:none; animation:wo-out .8s ease .12s forwards; }
-  html.from-book .hero-banner, html.from-book .page { animation:book-rise .8s ease .12s both; }
+  html.from-book .hero-banner { animation:book-rise .8s ease .12s both; }
+  /* 白から号のページが現れたあと、記事のカード（紙）が上から落ちてきて、いちばん下から順に積み上がる */
+  html.from-book .article-row.drop { position:relative; z-index:30; animation:paper-drop .55s cubic-bezier(.2,.85,.25,1.08) var(--d,.5s) backwards; }
+  html.from-book .cat-head { animation:book-rise .6s ease .5s backwards; }
+  @keyframes paper-drop { 0% { opacity:0; transform:perspective(900px) translateY(-115vh) rotateX(62deg) rotate(-3deg) scale(.95); } 55% { opacity:1; } 100% { opacity:1; transform:none; } }
   @keyframes wo-out { to { opacity:0; visibility:hidden; } }
   @keyframes book-rise { from { opacity:0; transform:translateY(14px) scale(.985); } to { opacity:1; transform:none; } }
-  @media (prefers-reduced-motion:reduce) { html.from-book::before, html.from-book .hero-banner, html.from-book .page { animation:none; } html.from-book::before { display:none; } }
+  @media (prefers-reduced-motion:reduce) { html.from-book::before, html.from-book .hero-banner, html.from-book .page, html.from-book .cat-head, html.from-book .article-row.drop { animation:none; } html.from-book::before { display:none; } }
 </style>
 <script>try{if(sessionStorage.getItem('bookOpen')){document.documentElement.classList.add('from-book');sessionStorage.removeItem('bookOpen')}}catch(e){}</script>
 </head>
@@ -1450,6 +1454,20 @@
       b.addEventListener('click', function () { dlg.close(); });
     });
   });
+</script>
+<script>
+(function(){
+  var de=document.documentElement;
+  if(!de.classList.contains('from-book')||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var vh=innerHeight,all=[].slice.call(document.querySelectorAll('.article-row'));
+  if(!all.length)return;
+  var first=all[0].getBoundingClientRect().top+scrollY;
+  var target=first>vh*0.75?Math.max(0,first-90):0;
+  var rows=all.filter(function(r){return r.getBoundingClientRect().top+scrollY-target<vh*0.95});
+  var base=target?0.95:0.55;
+  rows.reverse().forEach(function(r,i){r.style.setProperty('--d',(base+i*0.085)+'s');r.classList.add('drop')});
+  if(target)setTimeout(function(){window.scrollTo({top:target,behavior:'smooth'})},550);
+})();
 </script>
 </body>
 </html>
