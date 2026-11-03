@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>週刊テックナレッジ のしくみ（展示用）</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f6fb;--fg:#17202e;--muted:#566275;--line:#d8deea;--navy:#0f2a4a;--accent:#2563eb;--gold:#f5b50a;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1420;--fg:#e7ecf4;--muted:#9aa7bb;--line:#26324a;--card:#16203a;--navy:#0a1a30}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic UI",Meiryo,sans-serif;line-height:1.75;font-size:16px}
+.ribbon{background:#fef3c7;color:#92400e;text-align:center;font-size:13px;font-weight:700;padding:8px 12px}
+header{background:linear-gradient(135deg,var(--navy),#1f3b6b);color:#fff;padding:32px 16px 28px}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+header .wrap{padding:0}
+header h1{margin:0 0 8px;font-size:clamp(22px,5vw,30px);font-weight:800;line-height:1.35}
+header h1 .a{color:var(--gold)}
+header p{margin:0;color:#d5def0;font-size:15px}
+.back{display:inline-block;margin-top:14px;color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.5);border-radius:999px;padding:6px 14px;font-size:14px;font-weight:700}
+h2{font-size:20px;margin:36px 0 12px;font-weight:800}
+.flow{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.flow li{display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px;align-items:start}
+.when{font-weight:800;font-size:14px;color:var(--accent);padding-top:12px;text-align:right}
+.card{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:10px;padding:10px 14px}
+.card h3{margin:0 0 2px;font-size:16px}
+.card p{margin:0;color:var(--muted);font-size:14.5px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.box ul{margin:0;padding-left:20px}
+.box p{margin:0 0 8px}.box p:last-child{margin:0}
+.note{color:var(--muted);font-size:13.5px}
+footer{margin:40px 0 28px;color:var(--muted);font-size:13px;text-align:center}
+@media (max-width:520px){.flow li{grid-template-columns:1fr;gap:4px}.when{text-align:left;padding-top:0}}
+</style>
+</head>
+<body>
+<div class="ribbon">展示用ページ ― 記事・企業名・製品名はすべて架空です</div>
+<header><div class="wrap">
+<h1>週刊<span class="a">テックナレッジ</span> のしくみ</h1>
+<p>毎週の発行を、担当者が不在でも止めないために。収集から公開、配信までを自動で回す流れを紹介します。</p>
+<a class="back" href="index.html">← 紙面（第1号）へ戻る</a>
+</div></header>
+<main class="wrap">
+<h2>1週間の流れ</h2>
+<ol class="flow">
+<li><div class="when">金曜 朝5時</div><div class="card"><h3>収集</h3><p>9つの技術分野（AI・ロボット・特殊鋼・研削・切削・放電・治具・測定・金型）の業界紙やメーカー発表から、候補記事を集めます。記事は元のWebページの原文を直接読み込みます。</p></div></li>
+<li><div class="when">金曜 朝5時</div><div class="card"><h3>執筆</h3><p>AIエージェント（Claude Code の自動実行）が、記事を選び、AI要約と「現場の視点」コメントを書き、記事のアイコンを作ります。</p></div></li>
+<li><div class="when">金曜 朝5時</div><div class="card"><h3>組み立て</h3><p>カテゴリ別のWebページ（HTML）と、掲示・配布用のPDFにレイアウトします。</p></div></li>
+<li><div class="when">金曜 朝5時</div><div class="card"><h3>自動検証</h3><p>ブラウザ自動操作（Playwright）で、表示崩れ・リンク切れ・禁止語の有無を点検します。合格した号だけが、次へ進みます。</p></div></li>
+<li><div class="when">金曜 昼13時</div><div class="card"><h3>公開</h3><p>合格した号を、自動でWebに公開します（GitHub Pages）。</p></div></li>
+<li><div class="when">月曜 朝8時</div><div class="card"><h3>配信</h3><p>社内チャットの掲示板に、案内を自動で投稿します（GitHub Actions）。</p></div></li>
+<li><div class="when">いつでも</div><div class="card"><h3>止める</h3><p>気になる号があれば、「今週は止める」ボタン1つで、その週の公開を止められます。</p></div></li>
+</ol>
+
+<h2>品質を守るルール</h2>
+<div class="box"><ul>
+<li>出典は、一次情報・ニュース記事に限ります。</li>
+<li>数値がぶれないよう、要約のときは元のWebページを直接読みます。</li>
+<li>断定や推測は書きません。全ページに出典元と免責事項を載せます。</li>
+<li>検証に合格しなかった号は、公開されません。</li>
+</ul></div>
+
+<h2>データの持ち方</h2>
+<div class="box">
+<p>データベースは使わず、ファイル（JSON・HTML・PDF）で管理しています。号ごとのフォルダに、候補記事・検証結果・公開済みの記録を残します。</p>
+<p>公開はGitHub Pagesで行います。この展示ページも同じ公開の仕組みで置いています。</p>
+</div>
+
+<h2>これまでと、これから</h2>
+<div class="box">
+<p>2026年8月14日の第1号から、毎週発行を続けています。最初の5号を自分で監査したところ、出典の多くがニュースではない弱い情報源で、AIの事実誤認も見つかりました。そこで出典の基準を厳しくし、過去の号をすべて作り直しました。</p>
+<p>社内チャットへの自動投稿は、定時の起動が遅れたり飛んだりする週があり、安定して届くよう調整を進めています。</p>
+</div>
+
+<p class="note" style="margin-top:20px">本番は社内向けの非公開運用です。この展示用ページと紙面は、実在の企業・記事とは関係のない架空のサンプルです。</p>
+<footer>週刊テックナレッジ（展示用）</footer>
+</main>
+</body>
+</html>
