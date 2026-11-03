@@ -1133,7 +1133,14 @@
   .issue-nav a.sk { background:#2563eb; border-color:#2563eb; }
   .issue-nav .pn { display:flex; align-items:center; gap:8px; }
   .issue-nav .off { opacity:.35; pointer-events:none; }
+  /* 本棚の本を開いて来たときだけ、白からふわっと中身が現れる */
+  html.from-book::before { content:""; position:fixed; inset:0; background:#fff; z-index:9999; pointer-events:none; animation:wo-out .8s ease .12s forwards; }
+  html.from-book .hero-banner, html.from-book .page { animation:book-rise .8s ease .12s both; }
+  @keyframes wo-out { to { opacity:0; visibility:hidden; } }
+  @keyframes book-rise { from { opacity:0; transform:translateY(14px) scale(.985); } to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion:reduce) { html.from-book::before, html.from-book .hero-banner, html.from-book .page { animation:none; } html.from-book::before { display:none; } }
 </style>
+<script>try{if(sessionStorage.getItem('bookOpen')){document.documentElement.classList.add('from-book');sessionStorage.removeItem('bookOpen')}}catch(e){}</script>
 </head>
 <body>
 <div class="sample-ribbon">展示用サンプル ― 記事・企業名・製品名はすべて架空です</div>
