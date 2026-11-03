@@ -1133,6 +1133,7 @@
   .issue-nav a.sk { background:#2563eb; border-color:#2563eb; }
   .issue-nav .pn { display:flex; align-items:center; gap:8px; }
   .issue-nav .off { opacity:.35; pointer-events:none; }
+  .sp-pill { position:fixed; left:12px; bottom:12px; z-index:10000; background:#f5b50a; color:#0b1626; font-weight:800; font-size:13px; padding:5px 13px; border-radius:999px; box-shadow:0 3px 10px rgba(0,0,0,.4); pointer-events:none; }
   @media (max-width:540px) { .issue-nav { padding:8px 12px; gap:6px 10px; } .issue-nav a { padding:5px 11px; font-size:13px; } .issue-nav .pn { order:3; flex:1 0 100%; justify-content:center; } }
   /* 号のページの上部は、「タイトル行（号・PDFボタン・日付とテーマ）→ 線 → 記事の札」だけにして、すっきり低くする */
   .hero-inner { padding-top:20px; padding-bottom:14px; }
@@ -1521,6 +1522,7 @@
   function finish(){if(done)return;done=true;timers.forEach(clearTimeout);anims.forEach(function(a){try{a.cancel()}catch(e){}});cancelAnimationFrame(cam);reveal();evs.forEach(function(ev){removeEventListener(ev,finish)})}
   evs.forEach(function(ev){addEventListener(ev,finish,{passive:true})});
   var sp=parseFloat(de.style.getPropertyValue('--bs'))||1;   // 本棚の ?speed=2 のとき 2（全体を2倍速）
+  if(sp!==1){var pl=document.createElement('div');pl.className='sp-pill';pl.textContent='再生速度 ×'+sp;document.body.appendChild(pl);setTimeout(function(){pl.remove()},3500)}
   var order=rows.slice().reverse(),T=650/sp,FALL=450/sp,STEP=95/sp;   // 落ちる速さ・積み上がる間隔（2026-11-03 に 2倍速くした。ここは標準の速さ）
   at(T,function(){
     var f=order[0],y=top(f);f.style.visibility='';
