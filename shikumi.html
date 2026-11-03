@@ -47,8 +47,8 @@ footer{margin:40px 0 28px;color:var(--muted);font-size:13px;text-align:center}
 <li><div class="when">金曜 朝5時</div><div class="card"><h3>執筆</h3><p>AIエージェント（Claude Code の自動実行）が、記事を選び、AI要約と「現場の視点」コメントを書き、記事のアイコンを作ります。</p></div></li>
 <li><div class="when">金曜 朝5時</div><div class="card"><h3>組み立て</h3><p>カテゴリ別のWebページ（HTML）と、掲示・配布用のPDFにレイアウトします。</p></div></li>
 <li><div class="when">金曜 朝5時</div><div class="card"><h3>自動検証</h3><p>ブラウザ自動操作（Playwright）で、表示崩れ・リンク切れ・禁止語の有無を点検します。合格した号だけが、次へ進みます。</p></div></li>
-<li><div class="when">金曜 昼13時</div><div class="card"><h3>公開</h3><p>合格した号を、自動でWebに公開します（GitHub Pages）。</p></div></li>
-<li><div class="when">月曜 朝8時</div><div class="card"><h3>配信</h3><p>社内チャットの掲示板に、案内を自動で投稿します（GitHub Actions）。</p></div></li>
+<li><div class="when">金曜 昼13時</div><div class="card"><h3>自動公開</h3><p>合格した号を、Git（GitHub）へ自動で公開します。公開されたページが、そのままWebサイトになります（GitHub Pages）。</p></div></li>
+<li><div class="when">月曜 朝8時</div><div class="card"><h3>自動配信</h3><p>社内チャットツールに、新しい号の案内を自動で配信します（GitHub Actions）。</p></div></li>
 <li><div class="when">いつでも</div><div class="card"><h3>止める</h3><p>気になる号があれば、「今週は止める」ボタン1つで、その週の公開を止められます。</p></div></li>
 </ol>
 
@@ -63,13 +63,13 @@ footer{margin:40px 0 28px;color:var(--muted);font-size:13px;text-align:center}
 <h2>データの持ち方</h2>
 <div class="box">
 <p>データベースは使わず、ファイル（JSON・HTML・PDF）で管理しています。号ごとのフォルダに、候補記事・検証結果・公開済みの記録を残します。</p>
-<p>公開はGitHub Pagesで行います。この展示ページも同じ公開の仕組みで置いています。</p>
+<p>公開は、Git（GitHub）への自動公開（GitHub Pages）で行います。この展示ページも、同じ仕組みで置いています。</p>
 </div>
 
 <h2>これまでと、これから</h2>
 <div class="box">
 <p>2026年8月14日の第1号から、毎週発行を続けています。最初の5号を自分で監査したところ、出典の多くがニュースではない弱い情報源で、AIの事実誤認も見つかりました。そこで出典の基準を厳しくし、過去の号をすべて作り直しました。</p>
-<p>社内チャットへの自動投稿は、定時の起動が遅れたり飛んだりする週があり、安定して届くよう調整を進めています。</p>
+<p>社内チャットツールへの自動配信は、定時の起動が遅れたり飛んだりする週があり、安定して届くよう調整を進めています。</p>
 </div>
 
 <p class="note" style="margin-top:20px">本番は社内向けの非公開運用です。この展示用ページと紙面は、実在の企業・記事とは関係のない架空のサンプルです。</p>
