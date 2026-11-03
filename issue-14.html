@@ -1139,14 +1139,14 @@
   /* 白から号のページが現れたあと、白い枠が上から落ち、カメラが追って下まで行き、下から積み上がるのに合わせてパンアップし、
      一番上が乗ったら、白い枠が実際の記事の札になる（中身が現れる）。動かすのは下の ISSUE_TAIL_JS */
   html.from-book .article-row.fx { position:relative; z-index:30; }
-  html.from-book .article-row.fx > * { opacity:0; }
+  html.from-book .article-row.blank > * { opacity:0; }
   html.from-book .article-row > * { transition:opacity .5s ease; }
   html.from-book .cat-head { transition:opacity .5s ease; }
   @keyframes wo-out { to { opacity:0; visibility:hidden; } }
   @keyframes book-rise { from { opacity:0; transform:translateY(14px) scale(.985); } to { opacity:1; transform:none; } }
   @media (prefers-reduced-motion:reduce) { html.from-book::before, html.from-book .hero-banner, html.from-book .page, html.from-book .cat-head, html.from-book .article-row.drop { animation:none; } html.from-book::before { display:none; } }
 </style>
-<script>try{if(sessionStorage.getItem('bookOpen')){document.documentElement.classList.add('from-book');sessionStorage.removeItem('bookOpen')}}catch(e){}</script>
+<script>(function(){try{var v=sessionStorage.getItem('bookOpen');if(v){var c=document.documentElement.classList;c.add('from-book');if(v==='real')c.add('fall-real');sessionStorage.removeItem('bookOpen')}}catch(e){}})();</script>
 </head>
 <body>
 <div class="sample-ribbon">展示用サンプル ― 記事・企業名・製品名はすべて架空です</div>
@@ -1511,8 +1511,9 @@
   if(!de.classList.contains('from-book')||matchMedia('(prefers-reduced-motion: reduce)').matches||!Element.prototype.animate)return;
   var rows=[].slice.call(document.querySelectorAll('.article-row')),heads=[].slice.call(document.querySelectorAll('.cat-head'));
   if(!rows.length)return;
+  var real=de.classList.contains('fall-real');   // 本棚のURLに ?drop=real を付けると、白い枠ではなく、中身が見える本物の札のまま落とす
   var vh=innerHeight,timers=[],anims=[],cam=0,done=false,evs=['wheel','touchstart','keydown','mousedown'];
-  rows.forEach(function(r){r.classList.add('fx');r.style.visibility='hidden'});
+  rows.forEach(function(r){r.classList.add('fx');if(!real)r.classList.add('blank');r.style.visibility='hidden'});
   heads.forEach(function(h){h.style.opacity='0'});
   function top(el){return el.getBoundingClientRect().top+scrollY}
   function clamp(y){return Math.min(Math.max(0,de.scrollHeight-innerHeight),Math.max(0,y))}
@@ -1521,10 +1522,10 @@
     (function step(now){var p=Math.min(1,(now-t0)/dur);scrollTo({top:s+(y-s)*ease(p),left:0,behavior:'instant'});if(p<1)cam=requestAnimationFrame(step)})(t0)}
   function finalY(){var h0=heads[0];return (h0?top(h0):top(rows[0]))-80}
   function at(ms,fn){timers.push(setTimeout(fn,ms))}
-  function reveal(){rows.forEach(function(r){r.style.visibility='';r.classList.remove('fx')});heads.forEach(function(h){h.style.opacity=''})}
+  function reveal(){rows.forEach(function(r){r.style.visibility='';r.classList.remove('fx','blank')});heads.forEach(function(h){h.style.opacity=''})}
   function finish(){if(done)return;done=true;timers.forEach(clearTimeout);anims.forEach(function(a){try{a.cancel()}catch(e){}});cancelAnimationFrame(cam);reveal();evs.forEach(function(ev){removeEventListener(ev,finish)})}
   evs.forEach(function(ev){addEventListener(ev,finish,{passive:true})});
-  var order=rows.slice().reverse(),T=650,FALL=900,STEP=190;
+  var order=rows.slice().reverse(),T=650,FALL=450,STEP=95;   // 落ちる速さ・積み上がる間隔（2026-11-03 に 2倍速くした）
   at(T,function(){
     var f=order[0],y=top(f);f.style.visibility='';
     anims.push(f.animate([{transform:'perspective(900px) translateY('+(-(y+200))+'px) rotateX(55deg) rotate(-3deg) scale(.95)'},{transform:'none'}],{duration:FALL,easing:'cubic-bezier(.4,0,.25,1)'}));
@@ -1533,13 +1534,13 @@
   order.slice(1).forEach(function(r,k){
     at(T+FALL-60+k*STEP,function(){
       r.style.visibility='';
-      anims.push(r.animate([{transform:'perspective(900px) translateY('+(-vh*0.6)+'px) rotateX(40deg) rotate(2deg) scale(.97)'},{transform:'none'}],{duration:260,easing:'cubic-bezier(.3,.9,.3,1.05)'}));
-      camTo(Math.max(finalY(),top(r)-vh*0.45),320);   // 最終の位置より上へは行き過ぎない
+      anims.push(r.animate([{transform:'perspective(900px) translateY('+(-vh*0.6)+'px) rotateX(40deg) rotate(2deg) scale(.97)'},{transform:'none'}],{duration:130,easing:'cubic-bezier(.3,.9,.3,1.05)'}));
+      camTo(Math.max(finalY(),top(r)-vh*0.45),160);   // 最終の位置より上へは行き過ぎない
     });
   });
-  at(T+FALL-60+(order.length-1)*STEP+300,function(){
-    reveal();camTo(finalY(),500);
-    at(1000,finish);
+  at(T+FALL-60+(order.length-1)*STEP+160,function(){
+    reveal();camTo(finalY(),300);
+    at(800,finish);
   });
 })();
 </script>

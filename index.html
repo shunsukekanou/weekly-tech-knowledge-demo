@@ -124,7 +124,7 @@ footer{margin:6px 0 32px;color:var(--muted);font-size:12.5px;text-align:center}
 <script>
 (function(){
   var reduce=matchMedia('(prefers-reduced-motion: reduce)');
-  function go(href){try{sessionStorage.setItem('bookOpen','1')}catch(e){}location.href=href}
+  function go(href){try{sessionStorage.setItem('bookOpen',/[?&]drop=real/.test(location.search)?'real':'1')}catch(e){}location.href=href}
   function cleanup(){document.querySelectorAll('.bk-stage').forEach(function(n){n.remove()});document.querySelectorAll('a.book').forEach(function(a){a.style.visibility=''})}
   window.addEventListener('pageshow',cleanup);
   document.addEventListener('click',function(e){
