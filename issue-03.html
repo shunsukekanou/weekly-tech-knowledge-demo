@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="ja" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>週刊テックナレッジ 第3号（展示用サンプル）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1e293b;
+    --sub: #767676;
+    --sub-2: #9b9b9b;
+    --line: #e2e8f0;
+    --line-2: #ededed;
+    --bg: #f7f9fc;
+    --paper: #fafafa;
+    --page-bg: #ffffff;
+    --card: #ffffff;
+    --ink-strong: #1e293b;
+    --ink-muted: #64748b;
+    --c-ai: #6366f1;
+    --c-robot: #d97706;
+    --c-grinding: #2563eb;
+    --c-cutting: #0d9488;
+    --c-severing: #7c3aed;
+    --c-edm: #b45309;
+    --c-fixture: #db2777;
+    --c-measure: #0891b2;
+    --c-material: #16a34a;
+    --c-mold: #475569;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--ink);
+    margin: 0;
+    padding: 0;
+    background-color: #f8fafc;
+    background-image: url("assets/bg-circuit.svg");
+    background-size: 200px 200px;
+    background-repeat: repeat;
+    min-height: 100vh;
+  }
+  .mono { font-family: "Consolas", "SF Mono", "Courier New", monospace; }
+  a { color: inherit; }
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 20px;
+    background: var(--page-bg);
+    box-shadow: 0 0 40px rgba(15, 23, 42, 0.08);
+    border-radius: 0 0 16px 16px;
+  }
+  .hero-banner {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #081524 0%, #0f2540 50%, #123058 100%);
+    color: #e2e8f0;
+  }
+  .hero-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(56, 189, 248, 0.12) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56, 189, 248, 0.12) 1px, transparent 1px);
+    background-size: 36px 36px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 90% at 25% 30%, #000 0%, transparent 72%);
+    mask-image: radial-gradient(ellipse 70% 90% at 25% 30%, #000 0%, transparent 72%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero-banner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 12% 15%, rgba(56, 189, 248, 0.30) 0%, transparent 42%),
+      radial-gradient(circle at 88% 12%, rgba(168, 85, 247, 0.28) 0%, transparent 45%),
+      radial-gradient(circle at 75% 95%, rgba(245, 158, 11, 0.16) 0%, transparent 48%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .cyber-graphic {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.35;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 34px 24px 28px 24px;
+  }
+  .hero-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .sub-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #38bdf8;
+    text-transform: uppercase;
+    background: rgba(56, 189, 248, 0.12);
+    padding: 4px 11px;
+    border-radius: 20px;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+  }
+  .sub-badge.sub-badge-ai {
+    color: #d8b4fe;
+    background: rgba(168, 85, 247, 0.15);
+    border-color: rgba(168, 85, 247, 0.4);
+  }
+  .pulse-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #38bdf8;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #38bdf8;
+  }
+  .pulse-dot.pulse-dot-ai {
+    background-color: #a855f7;
+    box-shadow: 0 0 8px #a855f7;
+  }
+  .pdf-link-hero {
+    font-size: 12px;
+    font-weight: 700;
+    color: #e2e8f0;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    padding: 7px 15px;
+    border-radius: 16px;
+    white-space: nowrap;
+    backdrop-filter: blur(6px);
+  }
+  .pdf-link-hero:hover {
+    background: rgba(142, 200, 255, 0.18);
+    border-color: #8ec8ff;
+  }
+  .main-title {
+    font-size: 29px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    margin: 4px 0 12px 0;
+    color: #ffffff;
+    line-height: 1.3;
+  }
+  .gradient-text {
+    background: linear-gradient(90deg, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .issue-tag {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #cbd5e1;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    padding: 3px 11px;
+    border-radius: 14px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .lead-copy {
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: #cbd5e1;
+    margin: 0 0 16px 0;
+    max-width: 560px;
+  }
+  .issue-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .issue-meta .tag {
+    font-size: 11px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #94a3b8;
+    padding: 3px 10px;
+    border-radius: 6px;
+  }
+  .category-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .category-tags .tag {
+    font-size: 11px;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #94a3b8;
+    padding: 3px 10px;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+  .category-tags .tag.tag-ai       { --tag-c: var(--c-ai); }
+  .category-tags .tag.tag-robot    { --tag-c: var(--c-robot); }
+  .category-tags .tag.tag-grinding { --tag-c: var(--c-grinding); }
+  .category-tags .tag.tag-cutting  { --tag-c: var(--c-cutting); }
+  .category-tags .tag.tag-severing { --tag-c: var(--c-severing); }
+  .category-tags .tag.tag-edm      { --tag-c: var(--c-edm); }
+  .category-tags .tag.tag-fixture  { --tag-c: var(--c-fixture); }
+  .category-tags .tag.tag-measure  { --tag-c: var(--c-measure); }
+  .category-tags .tag.tag-material { --tag-c: var(--c-material); }
+  .category-tags .tag.tag-mold     { --tag-c: var(--c-mold); }
+  .category-tags .tag[class*="tag-"] {
+    color: color-mix(in srgb, var(--tag-c) 65%, white);
+    background: color-mix(in srgb, var(--tag-c) 18%, transparent);
+    border-color: color-mix(in srgb, var(--tag-c) 45%, transparent);
+  }
+  .category-tags .tag[class*="tag-"]:hover {
+    background: color-mix(in srgb, var(--tag-c) 32%, transparent);
+    border-color: var(--tag-c);
+    color: #ffffff;
+  }
+  .rainbow-border {
+    position: relative;
+    z-index: 1;
+    height: 3px;
+    width: 100%;
+    background: linear-gradient(90deg, #6366f1 0%, #38bdf8 20%, #a855f7 45%, #ec4899 70%, #f59e0b 100%);
+  }
+  @media (max-width: 640px) {
+    .hero-top-row { flex-direction: column; align-items: flex-start; }
+  }
+  .backnav {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 14px 0;
+    font-size: 12.5px;
+    color: var(--ink-muted);
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .backnav a {
+    text-decoration: none;
+    color: var(--ink-muted);
+  }
+  .backnav a:hover { color: #0f172a; }
+  .backnav-adjacent { display: flex; gap: 14px; flex-wrap: wrap; }
+  .content { padding: 8px 0 40px 0; }
+  .cat-section {
+    margin-top: 36px;
+    scroll-margin-top: 20px;
+  }
+  .cat-section:first-of-type { margin-top: 24px; }
+  .cat-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin: 0 0 4px 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent, var(--ink-strong));
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    color: var(--ink-strong);
+  }
+  .cat-head .num {
+    font-family: "Consolas", "SF Mono", "Courier New", monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--accent, #1c2430);
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+  }
+  .cat-head .en {
+    font-family: "Consolas", "SF Mono", "Courier New", monospace;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    margin-left: auto;
+  }
+  .article-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px;
+    margin-bottom: 10px;
+    background: var(--card);
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    border-left: 3px solid color-mix(in srgb, var(--accent, var(--line)) 55%, transparent);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+    cursor: pointer;
+    transition: background 0.15s, box-shadow 0.15s, transform 0.15s, border-color 0.15s;
+  }
+  .article-row:hover {
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.1);
+    border-color: color-mix(in srgb, var(--accent, var(--line)) 45%, #e2e8f0);
+    transform: translateY(-1px);
+  }
+  .article-row .thumb {
+    flex-shrink: 0;
+    width: 104px;
+    height: 78px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    background: #f1f1f1;
+  }
+  .article-row .row-text {
+    min-width: 0;
+    flex: 1;
+  }
+  .article-row h3 {
+    margin: 0 0 6px 0;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .article-row .meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11.5px;
+    color: var(--sub-2);
+    margin-bottom: 5px;
+  }
+  .article-row .meta .accent-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent, var(--sub-2));
+    flex-shrink: 0;
+  }
+  .article-row .teaser {
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--sub);
+    margin: 0;
+  }
+  @media (max-width: 480px) {
+    .article-row .thumb { width: 78px; height: 60px; }
+    .article-row h3 { font-size: 14px; }
+  }
+  dialog.article-dialog {
+    max-width: 640px;
+    width: 92vw;
+    max-height: 88vh;
+    overflow-y: auto;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0;
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.18);
+  }
+  dialog.article-dialog::backdrop {
+    background: rgba(15, 23, 42, 0.45);
+  }
+  dialog.article-dialog .dialog-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 0 32px 32px 32px;
+  }
+  dialog.article-dialog .dialog-photo-wrap,
+  dialog.article-dialog .noimg { order: 0; }
+  dialog.article-dialog h3      { order: 1; }
+  dialog.article-dialog .byline { order: 2; }
+  dialog.article-dialog .summary { order: 3; }
+  dialog.article-dialog .keyword { order: 4; }
+  dialog.article-dialog .link   { order: 5; }
+  dialog.article-dialog .dialog-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(15, 23, 42, 0.06);
+    color: #1e293b;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.12);
+    z-index: 2;
+  }
+  dialog.article-dialog .dialog-close:hover {
+    background: rgba(15, 23, 42, 0.12);
+    color: #0f172a;
+  }
+  dialog.article-dialog .dialog-photo-wrap {
+    position: relative;
+    width: calc(100% + 64px);
+    margin: 0 -32px 20px -32px;
+  }
+  dialog.article-dialog .dialog-photo {
+    display: block;
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 12px 12px 0 0;
+    border: none;
+  }
+  dialog.article-dialog .photo-credit {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    font-size: 10px;
+    line-height: 1.3;
+    color: #fff;
+    background: rgba(15, 23, 42, 0.55);
+    padding: 2px 7px;
+    border-radius: 4px;
+    letter-spacing: 0.2px;
+  }
+  dialog.article-dialog .noimg {
+    width: calc(100% + 64px);
+    margin: 0 -32px 22px -32px;
+    height: 180px;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+  dialog.article-dialog h3 {
+    margin: 0 0 14px 0;
+    padding-top: 26px;
+    font-size: 21px;
+    font-weight: 800;
+    line-height: 1.55;
+    color: #1e293b;
+  }
+  dialog.article-dialog .byline {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 12.5px;
+    color: #64748b;
+    margin: 0 0 22px 0;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  dialog.article-dialog .byline .avatar-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent, var(--sub-2));
+    flex-shrink: 0;
+  }
+  dialog.article-dialog .summary {
+    margin: 0 0 24px 0;
+  }
+  dialog.article-dialog .summary-box {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.9;
+    color: #1e293b;
+    letter-spacing: 0.2px;
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: 8px;
+    padding: 18px 20px;
+    box-shadow: none;
+  }
+  dialog.article-dialog .summary-box p { margin: 0; }
+  dialog.article-dialog .ai-summary-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: "Noto Sans JP", "Segoe UI", sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    color: #0369a1;
+    margin: 0 0 8px 0;
+  }
+  dialog.article-dialog .ai-summary-label .sparkle {
+    font-size: 16px;
+    filter: drop-shadow(0 0 3px rgba(214, 36, 159, 0.45));
+  }
+  dialog.article-dialog .ai-summary-label .ai-gradient {
+    background: linear-gradient(45deg, #f9ce34 0%, #ee2a7b 55%, #6228d7 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-right: 1px;
+  }
+  dialog.article-dialog .keyword {
+    align-self: flex-start;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--accent, #475569);
+    background: color-mix(in srgb, var(--accent, #94a3b8) 12%, white);
+    border: none;
+    border-radius: 20px;
+    padding: 5px 14px;
+    margin: 0 0 20px 0;
+    cursor: default;
+  }
+  dialog.article-dialog .keyword::before {
+    content: "# ";
+  }
+  dialog.article-dialog .link {
+    display: block;
+    text-align: center;
+    font-size: 14.5px;
+    font-weight: 700;
+    padding: 13px 20px;
+    border-radius: 8px;
+    color: #fff;
+    background: linear-gradient(135deg, #0284c7 0%, #0f2540 100%);
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    transition: filter 0.15s, box-shadow 0.15s;
+  }
+  dialog.article-dialog .link:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 6px 20px rgba(2, 132, 199, 0.45);
+  }
+  dialog.article-dialog .link::after {
+    content: " →";
+  }
+  .cat-ai       { --accent: var(--c-ai); }
+  .cat-robot    { --accent: var(--c-robot); }
+  .cat-grinding { --accent: var(--c-grinding); }
+  .cat-cutting  { --accent: var(--c-cutting); }
+  .cat-severing { --accent: var(--c-severing); }
+  .cat-edm      { --accent: var(--c-edm); }
+  .cat-fixture  { --accent: var(--c-fixture); }
+  .cat-measure  { --accent: var(--c-measure); }
+  .cat-material { --accent: var(--c-material); }
+  .cat-mold     { --accent: var(--c-mold); }
+  .genba-comment {
+    margin: 0 0 24px 0;
+    padding: 16px 20px;
+    background: #f1f5f9;
+    border: none;
+    border-left: 4px solid #38bdf8;
+    border-radius: 6px;
+    order: 3;
+  }
+  .genba-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "Noto Sans JP", "Segoe UI", sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px 0;
+  }
+  .genba-label .genba-gradient {
+    background: linear-gradient(90deg, #38bdf8 0%, #2563eb 50%, #4f46e5 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-right: 1px;
+  }
+  .genba-label .genba-mark {
+    font-size: 15px;
+    filter: drop-shadow(0 0 3px rgba(56, 189, 248, 0.5));
+  }
+  .genba-comment p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #1e293b;
+  }
+  dialog.article-dialog .summary { order: 3; }
+  dialog.article-dialog .genba-label { order: 4; }
+  dialog.article-dialog .genba-comment { order: 4; }
+  dialog.article-dialog .keyword { order: 5; }
+  dialog.article-dialog .link   { order: 6; }
+  .site-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 18px 0 40px 0;
+    border-top: 1px solid #e2e8f0;
+    font-size: 11px;
+    color: var(--ink-muted);
+    letter-spacing: 0.3px;
+  }
+  .site-disclaimer {
+    margin: 10px 0 0 0;
+    padding: 0 0 28px 0;
+    max-width: 640px;
+    font-size: 10.5px;
+    line-height: 1.8;
+    color: var(--ink-muted);
+    letter-spacing: 0.2px;
+  }
+  .page {
+    position: relative;
+    background: linear-gradient(135deg, #102539 0%, #16375a 55%, #1c4166 100%) !important;
+    border: 1px solid rgba(56, 189, 248, 0.28);
+    border-top: none;
+    box-shadow: 0 18px 50px rgba(8, 12, 24, 0.45);
+  }
+  .page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(56, 189, 248, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56, 189, 248, 0.07) 1px, transparent 1px);
+    background-size: 24px 24px;
+    border-radius: inherit;
+  }
+  .page > .backnav,
+  .page > .content { position: relative; z-index: 1; }
+  .backnav {
+    color: #94a3b8;
+    border-bottom-color: rgba(125, 211, 252, 0.22);
+  }
+  .backnav a { color: #cbd5e1; }
+  .backnav a:hover { color: #ffffff; }
+  .cat-head { color: #f1f5f9; }
+  .cat-head .en { color: #7dd3fc; }
+  .site-footer {
+    color: #94a3b8;
+    border-top-color: rgba(125, 211, 252, 0.22);
+  }
+  .site-disclaimer { color: #94a3b8; }
+  .article-row {
+    background: #ffffff;
+    border: 1.5px solid color-mix(in srgb, var(--accent, var(--line)) 45%, #e2e8f0);
+    border-left: 4px solid var(--accent, var(--line));
+    box-shadow: 0 1px 4px rgba(8, 12, 24, 0.18);
+    transition: box-shadow 0.25s ease, transform 0.18s ease, border-color 0.2s ease;
+  }
+  .article-row h3 { color: #1e293b; }
+  .article-row:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent, var(--line));
+    border-left-color: var(--accent, var(--line));
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.55),
+      0 0 18px rgba(255, 255, 255, 0.50),
+      0 0 44px rgba(255, 255, 255, 0.30),
+      0 12px 30px rgba(8, 12, 24, 0.42);
+  }
+  @media (max-width: 600px) {
+    .hero-inner { padding: 22px 16px 20px 16px; }
+    .hero-top-row { gap: 12px; }
+    .sub-badge { font-size: 9.5px; padding: 3px 9px; letter-spacing: 1px; }
+    .pdf-link-hero { font-size: 11px; padding: 6px 12px; }
+    .main-title { font-size: 21px; line-height: 1.4; margin: 6px 0 10px 0; }
+    .issue-tag { font-size: 10.5px; padding: 2px 8px; margin-left: 6px; }
+    .lead-copy { font-size: 12.5px; line-height: 1.7; }
+    .issue-meta .tag,
+    .category-tags .tag { font-size: 10.5px; padding: 3px 8px; }
+    .page { padding: 0 14px; }
+    .backnav { font-size: 11.5px; }
+    .cat-section { margin-top: 28px; }
+    .cat-head { flex-wrap: wrap; row-gap: 4px; font-size: 15.5px; }
+    .cat-head .en { margin-left: 0; flex-basis: 100%; }
+    .article-row { padding: 14px; gap: 10px; }
+    .article-row .thumb { width: 72px; height: 56px; }
+    .article-row h3 { font-size: 13.5px; }
+    .article-row .teaser { font-size: 11.5px; }
+    dialog.article-dialog { width: 94vw; max-height: 90vh; }
+    dialog.article-dialog .dialog-inner { padding: 0 18px 20px 18px; }
+    dialog.article-dialog .dialog-photo-wrap {
+      width: calc(100% + 36px);
+      margin: 0 -18px 16px -18px;
+    }
+    dialog.article-dialog .dialog-photo { height: 140px; }
+    dialog.article-dialog .photo-credit { font-size: 9px; }
+    dialog.article-dialog .noimg {
+      width: calc(100% + 36px);
+      margin: 0 -18px 18px -18px;
+      height: 170px;
+    }
+    dialog.article-dialog h3 { font-size: 18px; padding-top: 20px; }
+    dialog.article-dialog .summary-box { font-size: 14.5px; line-height: 1.9; padding: 14px 16px; }
+    dialog.article-dialog .ai-summary-label { font-size: 20px; margin-bottom: 8px; }
+    dialog.article-dialog .ai-summary-label .sparkle { font-size: 13px; }
+    dialog.article-dialog .link { font-size: 14px; padding: 12px 16px; }
+    .site-footer { flex-direction: column; gap: 4px; padding-bottom: 28px; }
+  }
+  @media print {
+    .pdf-link, .backnav { display: none !important; }
+    body { background: #fff !important; background-image: none !important; }
+    .page { background: #fff !important; box-shadow: none !important; max-width: 100% !important; padding: 0 14px !important; }
+    .page::before { display: none !important; }
+    .hero-inner { padding: 14px 18px 12px 18px !important; }
+    .badge-row, .lead-copy, .pdf-link-hero, .category-tags { display: none !important; }
+    .main-title { font-size: 20px !important; margin: 0 0 6px 0 !important; }
+    .issue-meta { margin-bottom: 0 !important; }
+    .rainbow-border { height: 2px !important; }
+    .content { padding: 10px 0 16px 0 !important; }
+    .cat-section { margin-top: 14px !important; }
+    .cat-section:first-of-type { margin-top: 8px !important; }
+    .cat-head { margin-bottom: 8px !important; padding-bottom: 6px !important; font-size: 14px !important; color: var(--ink) !important; }
+    .cat-head .en { color: var(--sub-2) !important; }
+    .site-footer { color: var(--sub-2) !important; border-top-color: var(--line) !important; padding: 10px 0 12px 0 !important; }
+    .site-disclaimer { color: var(--sub-2) !important; font-size: 9px !important; padding: 0 0 10px 0 !important; }
+    .article-row { display: none !important; }
+    dialog.article-dialog {
+      position: static !important;
+      display: block !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      max-height: none !important;
+      overflow: visible !important;
+      box-shadow: none !important;
+      border: 1px solid var(--line-2) !important;
+      border-left: 3px solid color-mix(in srgb, var(--accent, var(--line)) 55%, transparent) !important;
+      border-radius: 8px !important;
+      margin: 0 0 12px 0 !important;
+      padding: 12px 14px !important;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    dialog.article-dialog::backdrop { display: none !important; }
+    dialog.article-dialog .dialog-close { display: none !important; }
+    dialog.article-dialog .dialog-inner {
+      display: block !important;
+      padding: 0 !important;
+    }
+    dialog.article-dialog .dialog-photo-wrap {
+      width: 100% !important;
+      margin: 0 0 8px 0 !important;
+    }
+    dialog.article-dialog .dialog-photo {
+      height: 108px !important;
+      object-fit: cover !important;
+      border-radius: 6px !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    dialog.article-dialog .photo-credit { font-size: 8px !important; }
+    dialog.article-dialog h3 {
+      font-size: 14px !important;
+      line-height: 1.4 !important;
+      padding-top: 0 !important;
+      margin: 0 0 5px 0 !important;
+    }
+    dialog.article-dialog .byline {
+      font-size: 10px !important;
+      margin: 0 0 7px 0 !important;
+      padding-bottom: 5px !important;
+    }
+    dialog.article-dialog .ai-summary-label { font-size: 13px !important; margin-bottom: 4px !important; }
+    dialog.article-dialog .ai-summary-label .sparkle { font-size: 11px !important; }
+    dialog.article-dialog .summary-box {
+      font-size: 11px !important;
+      line-height: 1.5 !important;
+      padding: 8px 10px !important;
+      margin: 0 !important;
+    }
+    dialog.article-dialog .summary { margin: 0 0 8px 0 !important; }
+    .genba-comment { padding: 7px 10px !important; margin: 0 0 8px 0 !important; }
+    .genba-label { font-size: 13px !important; margin: 0 0 4px 0 !important; }
+    .genba-comment p { font-size: 11px !important; line-height: 1.5 !important; }
+    dialog.article-dialog .link {
+      font-size: 10.5px !important;
+      padding: 6px 10px !important;
+    }
+    .article-row { break-after: avoid; }
+    .cat-head {
+      break-inside: avoid;
+      page-break-inside: avoid;
+      break-after: avoid;
+      page-break-after: avoid;
+    }
+    dialog.article-dialog,
+    dialog.article-dialog .dialog-inner {
+      break-inside: avoid !important;
+      page-break-inside: avoid !important;
+    }
+    dialog.article-dialog h3,
+    dialog.article-dialog .byline,
+    dialog.article-dialog .summary,
+    dialog.article-dialog .summary-box,
+    dialog.article-dialog .ai-summary-label,
+    dialog.article-dialog .genba-comment,
+    dialog.article-dialog .genba-label,
+    dialog.article-dialog .keyword,
+    dialog.article-dialog .link,
+    dialog.article-dialog .dialog-photo-wrap,
+    dialog.article-dialog .noimg {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    dialog.article-dialog .dialog-photo-wrap,
+    dialog.article-dialog .noimg,
+    dialog.article-dialog h3,
+    dialog.article-dialog .byline,
+    dialog.article-dialog .ai-summary-label,
+    dialog.article-dialog .genba-label {
+      break-after: avoid;
+      page-break-after: avoid;
+    }
+    dialog.article-dialog .summary-box,
+    dialog.article-dialog .genba-comment,
+    dialog.article-dialog .link {
+      break-before: avoid;
+      page-break-before: avoid;
+    }
+    dialog.article-dialog p,
+    dialog.article-dialog .summary-box,
+    dialog.article-dialog .genba-comment {
+      orphans: 4;
+      widows: 4;
+    }
+  }
+  .type-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    line-height: 1;
+    padding: 4px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .type-badge.type-new {
+    color: #475569;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+  }
+  .type-badge.type-global {
+    color: #0f766e;
+    background: #f0fdfa;
+    border: 1px solid #99f6e4;
+  }
+  .type-badge.type-basic {
+    color: #b45309;
+    background: #fffbeb;
+    border: 1px solid #fcd34d;
+    font-weight: 800;
+    font-size: 11px;
+    padding: 4px 11px;
+  }
+  .article-row .row-text > .type-badge { margin: 0 0 6px 0; }
+  dialog.article-dialog .type-badge { order: 1; margin: 0 0 12px 0; align-self: flex-start; }
+  dialog.article-dialog h3 { padding-top: 0; }
+  @media print {
+    .type-badge {
+      font-size: 8px !important;
+      padding: 1px 6px !important;
+      margin-bottom: 4px !important;
+    }
+    .type-badge.type-basic { font-size: 8.5px !important; }
+  }
+  .summary-box .sum-lead {
+    margin: 0 0 11px 0;
+    font-weight: 500;
+  }
+  .summary-box .sum-points {
+    margin: 0;
+    padding-left: 1.3em;
+    list-style: disc;
+  }
+  .summary-box .sum-points li {
+    margin: 0 0 6px 0;
+    line-height: 1.7;
+  }
+  .summary-box .sum-points li:last-child { margin-bottom: 0; }
+  .summary-box .sum-points li::marker { color: #38bdf8; }
+  @media print {
+    .summary-box .sum-lead { margin-bottom: 5px !important; }
+    .summary-box .sum-points { padding-left: 1.15em !important; }
+    .summary-box .sum-points li { margin-bottom: 2px !important; line-height: 1.4 !important; }
+  }
+  dialog.article-dialog .dialog-close {
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    background: #0f2540;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.4);
+  }
+  dialog.article-dialog .dialog-close:hover {
+    background: #1d4ed8;
+    color: #ffffff;
+  }
+  dialog.article-dialog .dialog-close-bottom {
+    order: 7;
+    align-self: stretch;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 12px 20px;
+    margin: 14px 0 0 0;
+    cursor: pointer;
+  }
+  dialog.article-dialog .dialog-close-bottom:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+    border-color: #94a3b8;
+  }
+  @media (max-width: 600px) {
+    dialog.article-dialog .dialog-close { width: 38px; height: 38px; font-size: 16px; }
+  }
+  @media print {
+    dialog.article-dialog .dialog-close-bottom { display: none !important; }
+  }
+  .hero-top-row, .badge-row { display: none !important; }
+  .main-title .issue-tag {
+    font-size: 30px;
+    padding: 0;
+    margin-left: 12px;
+    border: none;
+    background: none;
+    color: #fbbf24;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    vertical-align: baseline;
+    text-shadow: 0 0 16px rgba(251, 191, 36, 0.45);
+  }
+  .main-title .pdf-link-hero {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+    font-size: 12px;
+  }
+  .issue-meta { gap: 12px; margin-bottom: 18px; }
+  .issue-meta .tag {
+    font-size: 15px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #ffffff;
+  }
+  .category-tags { gap: 12px; }
+  .category-tags .tag,
+  .category-tags .tag[class*="tag-"] {
+    font-size: 16px;
+    padding: 5px 14px;
+    border-radius: 8px;
+    color: #ffffff;
+  }
+  .category-tags .tag[class*="tag-"] { transition: box-shadow .18s ease, background .18s ease, border-color .18s ease, transform .18s ease; }
+  .category-tags .tag[class*="tag-"]:hover {
+    color: #ffffff;
+    border-color: var(--tag-c);
+    box-shadow: 0 0 14px 1px color-mix(in srgb, var(--tag-c) 60%, transparent),
+                0 0 5px color-mix(in srgb, var(--tag-c) 85%, transparent);
+    transform: translateY(-1px);
+  }
+  @media (max-width: 600px) {
+    .issue-meta .tag,
+    .category-tags .tag { font-size: 13px !important; padding: 4px 10px !important; }
+    .main-title .issue-tag { font-size: 22px; margin-left: 8px; }
+    .main-title .pdf-link-hero { margin-left: 8px; font-size: 11px; }
+  }
+  @media print {
+    .main-title .issue-tag { font-size: 15px !important; padding: 0 !important; text-shadow: none !important; }
+    .issue-meta .tag { font-size: 10px !important; padding: 0 !important; background: transparent !important; border: none !important; }
+    .main-title .pdf-link-hero { display: none !important; }
+  }
+  dialog.article-dialog .summary-box {
+    background: #fffcf2;             
+    border-color: #db2777;          
+  }
+  .summary-box .sum-points li::marker { color: #e2401c; }   
+  .genba-comment {
+    background: linear-gradient(135deg, #f0f9ff 0%, #dbeafe 100%);
+    border: 1px solid #3b82f6;
+    border-left: 1px solid #3b82f6;
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+  dialog.article-dialog .dialog-inner {
+    word-break: auto-phrase;
+    line-break: strict;
+  }
+  dialog.article-dialog .summary-box .q,
+  dialog.article-dialog .genba-comment .q {
+    white-space: nowrap;
+  }
+  .main-title .issue-tag { font-size: 45px; vertical-align: baseline; }
+  @media (max-width: 600px) {
+    .main-title .issue-tag { font-size: 33px !important; }
+  }
+  @media print {
+    .main-title .issue-tag { font-size: 16px !important; }
+    dialog.article-dialog .dialog-inner { word-break: normal; }
+    dialog.article-dialog .summary-box .q,
+    dialog.article-dialog .genba-comment .q { white-space: normal; }
+  }
+  dialog.article-dialog .ai-summary-label,
+  .genba-label {
+    display: inline-flex;
+    align-self: flex-start;
+    align-items: center;
+    gap: 8px;
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    padding: 9px 24px;
+    border-radius: 999px;
+    margin: 0 0 13px 0;
+  }
+  dialog.article-dialog .ai-summary-label {
+    background: linear-gradient(45deg, #f9ce34 0%, #ee2a7b 55%, #6228d7 100%);
+    box-shadow: 0 3px 10px rgba(147, 51, 234, 0.28);
+  }
+  .genba-label {
+    background: linear-gradient(90deg, #4f46e5 0%, #2563eb 50%, #38bdf8 100%);
+    box-shadow: 0 3px 10px rgba(37, 99, 235, 0.28);
+  }
+  dialog.article-dialog .ai-summary-label .ai-gradient,
+  dialog.article-dialog .genba-label .genba-gradient,
+  .genba-label .genba-gradient {
+    background: none !important;
+    -webkit-background-clip: border-box !important;
+    background-clip: border-box !important;
+    -webkit-text-fill-color: #ffffff !important;
+    color: #ffffff !important;
+  }
+  dialog.article-dialog .ai-summary-label .sparkle,
+  dialog.article-dialog .genba-label .genba-mark,
+  .genba-label .genba-mark {
+    font-size: 19px;
+    filter: none !important;
+  }
+  @media (max-width: 600px) {
+    dialog.article-dialog .ai-summary-label,
+    .genba-label { font-size: 18px; padding: 8px 18px; }
+  }
+  @media print {
+    dialog.article-dialog .ai-summary-label,
+    .genba-label {
+      background: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      font-size: 13px !important;
+      margin: 0 0 4px 0 !important;
+    }
+    dialog.article-dialog .ai-summary-label .ai-gradient { -webkit-text-fill-color: #0369a1 !important; color: #0369a1 !important; }
+    dialog.article-dialog .genba-label .genba-gradient,
+    .genba-label .genba-gradient { -webkit-text-fill-color: #2563eb !important; color: #2563eb !important; }
+    dialog.article-dialog .ai-summary-label .sparkle,
+    dialog.article-dialog .genba-label .genba-mark { font-size: 12px !important; }
+  }
+  .backnav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 10px;
+  }
+  .backnav .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(125, 211, 252, 0.35);
+    color: #cbd5e1;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background .18s ease, border-color .18s ease, color .18s ease;
+  }
+  .backnav .nav-btn:hover {
+    background: rgba(56, 189, 248, 0.16);
+    border-color: #7dd3fc;
+    color: #ffffff;
+  }
+  .backnav .nav-prev  { grid-column: 1; justify-self: start; }
+  .backnav .nav-index { grid-column: 2; justify-self: center; }
+  .backnav .nav-next  { grid-column: 3; justify-self: end; }
+  @media (max-width: 600px) {
+    .backnav { gap: 6px; }
+    .backnav .nav-btn { padding: 7px 11px; font-size: 11px; gap: 3px; }
+  }
+  @media print {
+    dialog.article-dialog { margin: 0 0 8px 0 !important; padding: 10px 12px !important; }
+    dialog.article-dialog .dialog-photo { height: 92px !important; }
+    dialog.article-dialog h3 { font-size: 13px !important; margin: 0 0 4px 0 !important; line-height: 1.35 !important; }
+    dialog.article-dialog .byline { font-size: 9px !important; margin: 0 0 5px 0 !important; padding-bottom: 4px !important; }
+    dialog.article-dialog .ai-summary-label, .genba-label { font-size: 11.5px !important; margin-bottom: 3px !important; }
+    dialog.article-dialog .summary { margin: 0 0 6px 0 !important; }
+    dialog.article-dialog .summary-box { font-size: 10px !important; line-height: 1.42 !important; padding: 7px 9px !important; }
+    .summary-box .sum-lead { margin-bottom: 4px !important; }
+    .summary-box .sum-points li { margin-bottom: 1px !important; line-height: 1.32 !important; }
+    .genba-comment { padding: 6px 9px !important; margin: 0 0 6px 0 !important; }
+    .genba-comment p { font-size: 10px !important; line-height: 1.42 !important; }
+    dialog.article-dialog .link { font-size: 9.5px !important; padding: 5px 9px !important; }
+  }
+
+  .sample-ribbon { background:#fef3c7; color:#92400e; text-align:center; font-size:13px; font-weight:700; padding:8px 12px; }
+  dialog.article-dialog span.link { cursor: default; opacity: .6; }
+  .issue-nav { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 16px; background:#0f2a4a; color:#fff; padding:10px 16px; font-size:14px; font-weight:700; }
+  .issue-nav a { color:#fff; text-decoration:none; padding:6px 12px; border:1px solid rgba(255,255,255,.45); border-radius:999px; white-space:nowrap; }
+  .issue-nav a.shelf { background:#f5b50a; border-color:#f5b50a; color:#0f2a4a; }
+  .issue-nav a.sk { background:#2563eb; border-color:#2563eb; }
+  .issue-nav .pn { display:flex; align-items:center; gap:8px; }
+  .issue-nav .off { opacity:.35; pointer-events:none; }
+</style>
+</head>
+<body>
+<div class="sample-ribbon">展示用サンプル ― 記事・企業名・製品名はすべて架空です</div>
+<nav class="issue-nav">
+  <a class="shelf" href="index.html">📚 本棚（全14号）へ</a>
+  <span class="pn"><a href="issue-02.html">← 前号</a><span>第3号</span><a href="issue-04.html">次号 →</a></span>
+  <a class="sk" href="shikumi.html">⚙ 自動で回るしくみ</a>
+</nav>
+
+<header class="hero-banner">
+  <svg class="cyber-graphic" viewBox="0 0 1000 340" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="netGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#38bdf8"/>
+        <stop offset="55%" stop-color="#818cf8"/>
+        <stop offset="100%" stop-color="#a855f7"/>
+      </linearGradient>
+    </defs>
+    <g stroke="url(#netGrad)" stroke-width="1" fill="none" opacity="0.55">
+      <line x1="60" y1="70" x2="150" y2="40"/>
+      <line x1="60" y1="70" x2="120" y2="140"/>
+      <line x1="150" y1="40" x2="230" y2="90"/>
+      <line x1="120" y1="140" x2="230" y2="90"/>
+      <line x1="120" y1="140" x2="90" y2="220"/>
+      <line x1="230" y1="90" x2="330" y2="60"/>
+      <line x1="230" y1="90" x2="320" y2="170"/>
+      <line x1="90" y1="220" x2="200" y2="270"/>
+      <line x1="200" y1="270" x2="320" y2="170"/>
+      <line x1="330" y1="60" x2="460" y2="50"/>
+      <line x1="320" y1="170" x2="460" y2="200"/>
+      <line x1="460" y1="50" x2="580" y2="90"/>
+      <line x1="460" y1="200" x2="580" y2="150"/>
+      <line x1="580" y1="90" x2="580" y2="150"/>
+      <line x1="580" y1="90" x2="700" y2="60"/>
+      <line x1="580" y1="150" x2="700" y2="210"/>
+      <line x1="700" y1="60" x2="820" y2="90"/>
+      <line x1="700" y1="210" x2="820" y2="240"/>
+      <line x1="820" y1="90" x2="820" y2="240"/>
+      <line x1="820" y1="90" x2="920" y2="60"/>
+      <line x1="820" y1="240" x2="920" y2="270"/>
+    </g>
+    <g fill="url(#netGrad)" opacity="0.85">
+      <circle cx="60" cy="70" r="4"/>
+      <circle cx="150" cy="40" r="3"/>
+      <circle cx="120" cy="140" r="5"/>
+      <circle cx="230" cy="90" r="4"/>
+      <circle cx="90" cy="220" r="3.5"/>
+      <circle cx="330" cy="60" r="3"/>
+      <circle cx="320" cy="170" r="4"/>
+      <circle cx="200" cy="270" r="3"/>
+      <circle cx="460" cy="50" r="3.5"/>
+      <circle cx="460" cy="200" r="3"/>
+      <circle cx="580" cy="90" r="4.5"/>
+      <circle cx="580" cy="150" r="3"/>
+      <circle cx="700" cy="60" r="3.5"/>
+      <circle cx="700" cy="210" r="3"/>
+      <circle cx="820" cy="90" r="4"/>
+      <circle cx="820" cy="240" r="3.5"/>
+      <circle cx="920" cy="60" r="3"/>
+      <circle cx="920" cy="270" r="4"/>
+    </g>
+    <g stroke="#38bdf8" stroke-width="1.2" fill="none" opacity="0.35">
+      <polygon points="140,120 165,133 165,159 140,172 115,159 115,133"/>
+      <polygon points="560,110 585,123 585,149 560,162 535,149 535,123"/>
+      <polygon points="880,150 905,163 905,189 880,202 855,189 855,163"/>
+    </g>
+  </svg>
+
+  <div class="hero-inner">
+    <h1 class="main-title">
+      週刊テック<span class="gradient-text">ナレッジ</span><span class="issue-tag">第3号</span><a class="pdf-link-hero" href="週刊テックナレッジ_第3号_20260824.pdf" download>⬅ PDF版をダウンロード</a>
+    </h1>
+    <p class="lead-copy">金属加工・金型・工作機械の現場技術（テック）からAI・ロボット活用までを厳選した、モノづくり現場のための週刊ダイジェスト。多忙な現場でも3分で読めるボリュームに絞っています。新着ニュースが少ない分野は「🔰 基礎から学ぶ」記事で補っています。</p>
+    <div class="issue-meta">
+      <span class="tag">2026年8月24日号　ロボットで夜間運転を広げる</span>
+      <span class="tag">展示用サンプル号（記事はすべて架空です）</span>
+    </div>
+    <div class="category-tags">
+      <a class="tag tag-robot" href="#sec-robot">ロボット・現場自動化</a>
+      <a class="tag tag-cutting" href="#sec-cutting">切削加工</a>
+      <a class="tag tag-severing" href="#sec-severing">切断・放電加工</a>
+      <a class="tag tag-measure" href="#sec-measure">測定・幾何公差</a>
+    </div>
+  </div>
+  <div class="rainbow-border"></div>
+</header>
+
+<div class="page">
+
+  <main class="content">
+
+    <section class="cat-section cat-robot" id="sec-robot">
+      <h2 class="cat-head"><span class="num">02</span>ロボット・現場自動化<span class="en">Robotics</span></h2>
+
+      <div class="article-row" data-dialog="dlg-robot-1" tabindex="0">
+        <img class="thumb" src="assets/thumbs/robot.svg" alt="">
+        <div class="row-text">
+          <span class="type-badge type-new">🆕 今週の新着</span>
+          <h3>ダミーロボティクス、研削盤へのワーク自動投入セルを発売</h3>
+          <div class="meta"><span class="accent-dot"></span><span>出典: 架空のプレスリリース（サンプル）</span></div>
+          <p class="teaser">段取り済みのワークを出し入れし、夜間の無人運転を支える。</p>
+        </div>
+      </div>
+      <dialog class="article-dialog" id="dlg-robot-1">
+        <div class="dialog-inner">
+          <button class="dialog-close" aria-label="閉じる">✕</button>
+          <span class="type-badge type-new">🆕 今週の新着</span>
+          <h3>ダミーロボティクス、研削盤へのワーク自動投入セルを発売</h3>
+          <div class="byline"><span class="avatar-dot"></span>出典: 架空のプレスリリース（サンプル）</div>
+          <div class="summary">
+          <div class="ai-summary-label"><span class="ai-gradient">AI要約</span><span class="sparkle">✨</span></div>
+          <div class="summary-box">
+            <p class="sum-lead">架空のロボットメーカー「ダミーロボティクス」は、研削盤へのワーク投入と取り出しを自動化するセルを発売した。</p>
+            <ul class="sum-points">
+            <li>安全柵なしで人と同じ通路に置ける協働ロボットを採用</li>
+            <li>ワーク置き場はトレー交換式で、品替えの手間を減らす</li>
+            <li>機械の扉の開閉と連動して動く</li>
+            </ul>
+          </div>
+        </div>
+          <div class="genba-label"><span class="genba-gradient">現場の視点</span><span class="genba-mark">🔍</span></div>
+          <div class="genba-comment"><p>これは、研削盤に付きっきりの時間を減らす、という話です。夜の間も機械が動けば、昼は段取りと確認に集中できますよね。</p></div>
+          <span class="link" title="展示用サンプルのため元記事はありません">元記事（展示用サンプルのためリンクなし）</span>
+          <button class="dialog-close-bottom" type="button" aria-label="閉じる">✕ 閉じる</button>
+        </div>
+      </dialog>
+      <div class="article-row" data-dialog="dlg-robot-2" tabindex="0">
+        <img class="thumb" src="assets/thumbs/robot.svg" alt="">
+        <div class="row-text">
+          <span class="type-badge type-new">🆕 今週の新着</span>
+          <h3>例示ソフト、ロボットの動きを画面で確認できる設定ツールを公開</h3>
+          <div class="meta"><span class="accent-dot"></span><span>出典: 架空の業界紙（サンプル）</span></div>
+          <p class="teaser">実機を動かす前に、干渉の有無を画面で確かめられる。</p>
+        </div>
+      </div>
+      <dialog class="article-dialog" id="dlg-robot-2">
+        <div class="dialog-inner">
+          <button class="dialog-close" aria-label="閉じる">✕</button>
+          <span class="type-badge type-new">🆕 今週の新着</span>
+          <h3>例示ソフト、ロボットの動きを画面で確認できる設定ツールを公開</h3>
+          <div class="byline"><span class="avatar-dot"></span>出典: 架空の業界紙（サンプル）</div>
+          <div class="summary">
+          <div class="ai-summary-label"><span class="ai-gradient">AI要約</span><span class="sparkle">✨</span></div>
+          <div class="summary-box">
+            <p class="sum-lead">架空の企業「例示ソフト」は、ロボットの動きを画面上で確認できる設定ツールを公開した。</p>
+            <ul class="sum-points">
+            <li>三次元の画面で、動きと周りの設備との干渉を確認する</li>
+            <li>確認した動きをそのまま実機へ転送できる</li>
+            <li>試運転の時間を短くできる</li>
+            </ul>
+          </div>
+        </div>
+          <div class="genba-label"><span class="genba-gradient">現場の視点</span><span class="genba-mark">🔍</span></div>
+          <div class="genba-comment"><p>これは、ロボットの試運転を「画面の上」で済ませる、という話です。実機で試す回数が減れば、立ち上げの負担もぐっと軽くなりそうですよね。</p></div>
+          <span class="link" title="展示用サンプルのため元記事はありません">元記事（展示用サンプルのためリンクなし）</span>
+          <button class="dialog-close-bottom" type="button" aria-label="閉じる">✕ 閉じる</button>
+        </div>
+      </dialog>
+    </section>
+    <section class="cat-section cat-cutting" id="sec-cutting">
+      <h2 class="cat-head"><span class="num">05</span>切削加工<span class="en">Cutting</span></h2>
+
+      <div class="article-row" data-dialog="dlg-cutting-1" tabindex="0">
+        <img class="thumb" src="assets/thumbs/cutting.svg" alt="">
+        <div class="row-text">
+          <span class="type-badge type-basic">🔰 基礎から学ぶ</span>
+          <h3>基礎から学ぶ：切削速度・送り・切込みの「3つの基本条件」</h3>
+          <div class="meta"><span class="accent-dot"></span><span>出典: 架空の技術解説（サンプル）</span></div>
+          <p class="teaser">加工条件の出発点になる3つの数字の関係を整理。</p>
+        </div>
+      </div>
+      <dialog class="article-dialog" id="dlg-cutting-1">
+        <div class="dialog-inner">
+          <button class="dialog-close" aria-label="閉じる">✕</button>
+          <span class="type-badge type-basic">🔰 基礎から学ぶ</span>
+          <h3>基礎から学ぶ：切削速度・送り・切込みの「3つの基本条件」</h3>
+          <div class="byline"><span class="avatar-dot"></span>出典: 架空の技術解説（サンプル）</div>
+          <div class="summary">
+          <div class="ai-summary-label"><span class="ai-gradient">AI要約</span><span class="sparkle">✨</span></div>
+          <div class="summary-box">
+            <p class="sum-lead">切削加工の条件は、切削速度・送り・切込みの3つが基本で、互いに影響し合う。</p>
+            <ul class="sum-points">
+            <li>切削速度は、工具と材料の組み合わせで目安が決まる</li>
+            <li>送りが大きいほど速く削れるが、仕上げ面は荒れやすい</li>
+            <li>切込みは、機械の剛性と工具の強さで上限が決まる</li>
+            </ul>
+          </div>
+        </div>
+          <div class="genba-label"><span class="genba-gradient">現場の視点</span><span class="genba-mark">🔍</span></div>
+          <div class="genba-comment"><p>これは、条件出しの最初に押さえる3つの数字の解説です。1つだけ変えると他にも影響が出る、という見方を知っておくと、トラブルの原因探しも楽になりますよね。</p></div>
+          <span class="link" title="展示用サンプルのため元記事はありません">元記事（展示用サンプルのためリンクなし）</span>
+          <button class="dialog-close-bottom" type="button" aria-label="閉じる">✕ 閉じる</button>
+        </div>
+      </dialog>
+    </section>
+    <section class="cat-section cat-severing" id="sec-severing">
+      <h2 class="cat-head"><span class="num">06</span>切断・放電加工<span class="en">Severing &amp; EDM</span></h2>
+
+      <div class="article-row" data-dialog="dlg-severing-1" tabindex="0">
+        <img class="thumb" src="assets/thumbs/severing.svg" alt="">
+        <div class="row-text">
+          <span class="type-badge type-new">🆕 今週の新着</span>
+          <h3>テスト精工、ワイヤ放電加工機の自動結線を高速化</h3>
+          <div class="meta"><span class="accent-dot"></span><span>出典: 架空の業界紙（サンプル）</span></div>
+          <p class="teaser">糸の切れた後の再開が、短い時間で済む。</p>
+        </div>
+      </div>
+      <dialog class="article-dialog" id="dlg-severing-1">
+        <div class="dialog-inner">
+          <button class="dialog-close" aria-label="閉じる">✕</button>
+          <span class="type-badge type-new">🆕 今週の新着</span>
+          <h3>テスト精工、ワイヤ放電加工機の自動結線を高速化</h3>
+          <div class="byline"><span class="avatar-dot"></span>出典: 架空の業界紙（サンプル）</div>
+          <div class="summary">
+          <div class="ai-summary-label"><span class="ai-gradient">AI要約</span><span class="sparkle">✨</span></div>
+          <div class="summary-box">
+            <p class="sum-lead">架空の機械メーカー「テスト精工」は、ワイヤ放電加工機の自動結線を速くする機構を発表した。</p>
+            <ul class="sum-points">
+            <li>ワイヤの先端を整える工程を自動化</li>
+            <li>切れた後の再開が速くなり、夜間の停止が減る</li>
+            <li>細いワイヤでも安定して通せる</li>
+            </ul>
+          </div>
+        </div>
+          <div class="genba-label"><span class="genba-gradient">現場の視点</span><span class="genba-mark">🔍</span></div>
+          <div class="genba-comment"><p>これは、夜間の無人運転で「止まったまま朝を迎える」事故を減らす、という話です。結線が安定するかどうかは、無人運転の信頼に直結しますよね。</p></div>
+          <span class="link" title="展示用サンプルのため元記事はありません">元記事（展示用サンプルのためリンクなし）</span>
+          <button class="dialog-close-bottom" type="button" aria-label="閉じる">✕ 閉じる</button>
+        </div>
+      </dialog>
+    </section>
+    <section class="cat-section cat-measure" id="sec-measure">
+      <h2 class="cat-head"><span class="num">08</span>測定・幾何公差管理<span class="en">Measurement</span></h2>
+
+      <div class="article-row" data-dialog="dlg-measure-1" tabindex="0">
+        <img class="thumb" src="assets/thumbs/measure.svg" alt="">
+        <div class="row-text">
+          <span class="type-badge type-new">🆕 今週の新着</span>
+          <h3>サンプル測器、加工機の中で寸法を測るプローブを発売</h3>
+          <div class="meta"><span class="accent-dot"></span><span>出典: 架空のプレスリリース（サンプル）</span></div>
+          <p class="teaser">ワークを外さずに測り、そのまま補正につなげる。</p>
+        </div>
+      </div>
+      <dialog class="article-dialog" id="dlg-measure-1">
+        <div class="dialog-inner">
+          <button class="dialog-close" aria-label="閉じる">✕</button>
+          <span class="type-badge type-new">🆕 今週の新着</span>
+          <h3>サンプル測器、加工機の中で寸法を測るプローブを発売</h3>
+          <div class="byline"><span class="avatar-dot"></span>出典: 架空のプレスリリース（サンプル）</div>
+          <div class="summary">
+          <div class="ai-summary-label"><span class="ai-gradient">AI要約</span><span class="sparkle">✨</span></div>
+          <div class="summary-box">
+            <p class="sum-lead">架空の企業「サンプル測器」は、加工機の中でワークの寸法を測るプローブを発売した。</p>
+            <ul class="sum-points">
+            <li>加工の途中で測定し、結果を機械の補正に反映できる</li>
+            <li>付け替えによるズレが起きない</li>
+            <li>測定の記録を自動で残せる</li>
+            </ul>
+          </div>
+        </div>
+          <div class="genba-label"><span class="genba-gradient">現場の視点</span><span class="genba-mark">🔍</span></div>
+          <div class="genba-comment"><p>これは、測ってから直すまでの距離を縮める、という話です。外して測って戻す作業が減ると、精度と時間の両方に効きますよね。</p></div>
+          <span class="link" title="展示用サンプルのため元記事はありません">元記事（展示用サンプルのためリンクなし）</span>
+          <button class="dialog-close-bottom" type="button" aria-label="閉じる">✕ 閉じる</button>
+        </div>
+      </dialog>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>週刊テックナレッジ</span>
+    <span>ISSUE No.03 &nbsp;/&nbsp; 2026.08.24</span>
+  </footer>
+  <p class="site-disclaimer">本サイトの記事は、各企業・研究機関等が公表した情報をもとに、独自に要約したものです。内容の正確性については、必ず出典元の情報でご確認ください。また、記事中のコメント（「現場の視点」）は執筆担当者個人の見解であり、発行元としての公式見解・保証を示すものではありません。<br>※本ページはコンテスト展示用のサンプルです。掲載記事はすべて架空の内容です。<br>© 2026 サンプル製作所（架空）</p>
+
+</div>
+
+<script>
+  document.querySelectorAll('.article-row[data-dialog]').forEach(function (card) {
+    var dlg = document.getElementById(card.dataset.dialog);
+    if (!dlg) return;
+    function open() {
+      if (typeof dlg.showModal === 'function') {
+        dlg.showModal();
+      } else {
+        dlg.setAttribute('open', '');
+      }
+    }
+    card.addEventListener('click', open);
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        open();
+      }
+    });
+  });
+
+  document.querySelectorAll('dialog.article-dialog').forEach(function (dlg) {
+    var inner = dlg.querySelector('.dialog-inner');
+    dlg.addEventListener('click', function (e) {
+      var r = inner.getBoundingClientRect();
+      var inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+      if (!inside) dlg.close();
+    });
+    dlg.querySelectorAll('.dialog-close, .dialog-close-bottom').forEach(function (b) {
+      b.addEventListener('click', function () { dlg.close(); });
+    });
+  });
+</script>
+</body>
+</html>
