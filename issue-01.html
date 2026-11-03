@@ -1139,19 +1139,19 @@
   .main-title { margin:2px 0 8px; }
   .issue-meta { margin-bottom:0; }
   /* 本棚の本を開いて来たときだけ、白からふわっと中身が現れる */
-  html.from-book::before { content:""; position:fixed; inset:0; background:#fff; z-index:9999; pointer-events:none; animation:wo-out .8s ease .12s forwards; }
-  html.from-book .hero-banner { animation:book-rise .8s ease .12s both; }
+  html.from-book::before { content:""; position:fixed; inset:0; background:#fff; z-index:9999; pointer-events:none; animation:wo-out calc(.8s / var(--bs,1)) ease calc(.12s / var(--bs,1)) forwards; }
+  html.from-book .hero-banner { animation:book-rise calc(.8s / var(--bs,1)) ease calc(.12s / var(--bs,1)) both; }
   /* 白から号のページが現れたあと、白い枠が上から落ち、カメラが追って下まで行き、下から積み上がるのに合わせてパンアップし、
      一番上が乗ったら、白い枠が実際の記事の札になる（中身が現れる）。動かすのは下の ISSUE_TAIL_JS */
   html.from-book .article-row.fx { position:relative; z-index:30; }
   html.from-book .article-row.blank > * { opacity:0; }
-  html.from-book .article-row > * { transition:opacity .5s ease; }
-  html.from-book .cat-head { transition:opacity .5s ease; }
+  html.from-book .article-row > * { transition:opacity calc(.5s / var(--bs,1)) ease; }
+  html.from-book .cat-head { transition:opacity calc(.5s / var(--bs,1)) ease; }
   @keyframes wo-out { to { opacity:0; visibility:hidden; } }
   @keyframes book-rise { from { opacity:0; transform:translateY(14px) scale(.985); } to { opacity:1; transform:none; } }
   @media (prefers-reduced-motion:reduce) { html.from-book::before, html.from-book .hero-banner, html.from-book .page, html.from-book .cat-head, html.from-book .article-row.drop { animation:none; } html.from-book::before { display:none; } }
 </style>
-<script>(function(){try{var v=sessionStorage.getItem('bookOpen');if(v){var c=document.documentElement.classList;c.add('from-book');if(v==='real')c.add('fall-real');sessionStorage.removeItem('bookOpen')}}catch(e){}})();</script>
+<script>(function(){try{var v=sessionStorage.getItem('bookOpen'),s=parseFloat(sessionStorage.getItem('bookSpeed'))||1;sessionStorage.removeItem('bookSpeed');if(v){var d=document.documentElement,c=d.classList;c.add('from-book');if(v==='real')c.add('fall-real');d.style.setProperty('--bs',s);sessionStorage.removeItem('bookOpen')}}catch(e){}})();</script>
 </head>
 <body>
 <div class="sample-ribbon">展示用サンプル ― 記事・企業名・製品名はすべて架空です</div>
@@ -1478,22 +1478,23 @@
   function reveal(){rows.forEach(function(r){r.style.visibility='';r.classList.remove('fx','blank')});heads.forEach(function(h){h.style.opacity=''})}
   function finish(){if(done)return;done=true;timers.forEach(clearTimeout);anims.forEach(function(a){try{a.cancel()}catch(e){}});cancelAnimationFrame(cam);reveal();evs.forEach(function(ev){removeEventListener(ev,finish)})}
   evs.forEach(function(ev){addEventListener(ev,finish,{passive:true})});
-  var order=rows.slice().reverse(),T=650,FALL=450,STEP=95;   // 落ちる速さ・積み上がる間隔（2026-11-03 に 2倍速くした）
+  var sp=parseFloat(de.style.getPropertyValue('--bs'))||1;   // 本棚の ?speed=2 のとき 2（全体を2倍速）
+  var order=rows.slice().reverse(),T=650/sp,FALL=450/sp,STEP=95/sp;   // 落ちる速さ・積み上がる間隔（2026-11-03 に 2倍速くした。ここは標準の速さ）
   at(T,function(){
     var f=order[0],y=top(f);f.style.visibility='';
     anims.push(f.animate([{transform:'perspective(900px) translateY('+(-(y+200))+'px) rotateX(55deg) rotate(-3deg) scale(.95)'},{transform:'none'}],{duration:FALL,easing:'cubic-bezier(.4,0,.25,1)'}));
     camTo(y-vh*0.55,FALL);
   });
   order.slice(1).forEach(function(r,k){
-    at(T+FALL-60+k*STEP,function(){
+    at(T+FALL-60/sp+k*STEP,function(){
       r.style.visibility='';
-      anims.push(r.animate([{transform:'perspective(900px) translateY('+(-vh*0.6)+'px) rotateX(40deg) rotate(2deg) scale(.97)'},{transform:'none'}],{duration:130,easing:'cubic-bezier(.3,.9,.3,1.05)'}));
-      camTo(Math.max(finalY(),top(r)-vh*0.45),160);   // 最終の位置より上へは行き過ぎない
+      anims.push(r.animate([{transform:'perspective(900px) translateY('+(-vh*0.6)+'px) rotateX(40deg) rotate(2deg) scale(.97)'},{transform:'none'}],{duration:130/sp,easing:'cubic-bezier(.3,.9,.3,1.05)'}));
+      camTo(Math.max(finalY(),top(r)-vh*0.45),160/sp);   // 最終の位置より上へは行き過ぎない
     });
   });
-  at(T+FALL-60+(order.length-1)*STEP+160,function(){
-    reveal();camTo(finalY(),300);
-    at(800,finish);
+  at(T+FALL-60/sp+(order.length-1)*STEP+160/sp,function(){
+    reveal();camTo(finalY(),300/sp);
+    at(800/sp,finish);
   });
 })();
 </script>

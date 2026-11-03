@@ -124,7 +124,9 @@ footer{margin:6px 0 32px;color:var(--muted);font-size:12.5px;text-align:center}
 <script>
 (function(){
   var reduce=matchMedia('(prefers-reduced-motion: reduce)');
-  function go(href){try{sessionStorage.setItem('bookOpen',/[?&]drop=real/.test(location.search)?'real':'1')}catch(e){}location.href=href}
+  // 本棚のURLに ?speed=2 を付けると、本の演出も号のページの演出も、全体を2倍速にする（付けなければ今の速さ）。?drop=real と一緒に付けてもよい
+  var sp=parseFloat((location.search.match(/[?&]speed=([0-9.]+)/)||[])[1])||1;sp=Math.min(4,Math.max(0.5,sp));
+  function go(href){try{sessionStorage.setItem('bookOpen',/[?&]drop=real/.test(location.search)?'real':'1');sessionStorage.setItem('bookSpeed',String(sp))}catch(e){}location.href=href}
   function cleanup(){document.querySelectorAll('.bk-stage').forEach(function(n){n.remove()});document.querySelectorAll('a.book').forEach(function(a){a.style.visibility=''})}
   window.addEventListener('pageshow',cleanup);
   document.addEventListener('click',function(e){
@@ -148,12 +150,12 @@ footer{margin:6px 0 32px;color:var(--muted);font-size:12.5px;text-align:center}
     st.addEventListener('click',next);
     // 開いた本（見開き＝本2冊分の幅）が、どの画面でも横にも縦にもはみ出さない大きさにする。背表紙を画面の中央に置く
     var s=Math.min(W*0.44/r.width,H*0.68/r.height,3.4),dx=W/2+r.width*s/2-(r.left+r.width/2),dy=H/2-(r.top+r.height/2);
-    st.animate([{background:'rgba(8,14,26,0)'},{background:'rgba(8,14,26,.74)'}],{duration:420,fill:'forwards'});
-    var lift=bk.animate([{transform:'none'},{transform:'translate('+dx+'px,'+dy+'px) scale('+s+')'}],{duration:480,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'});
+    st.animate([{background:'rgba(8,14,26,0)'},{background:'rgba(8,14,26,.74)'}],{duration:420/sp,fill:'forwards'});
+    var lift=bk.animate([{transform:'none'},{transform:'translate('+dx+'px,'+dy+'px) scale('+s+')'}],{duration:480/sp,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'});
     lift.onfinish=function(){
-      cover.animate([{transform:'translateZ(6px) rotateY(0deg)'},{transform:'translateZ(6px) rotateY(-168deg)'}],{duration:560,easing:'ease-in-out',fill:'forwards'});
-      leaves.forEach(function(l,i){var z=1+(4-i)*0.9;l.animate([{transform:'translateZ('+z+'px) rotateY(0deg)'},{transform:'translateZ('+z+'px) rotateY(-164deg)'}],{duration:400,delay:200+i*85,easing:'ease-in-out',fill:'forwards'})});
-      setTimeout(function(){var w=wo.animate([{opacity:0},{opacity:1}],{duration:360,easing:'ease-in',fill:'forwards'});w.onfinish=next},780);
+      cover.animate([{transform:'translateZ(6px) rotateY(0deg)'},{transform:'translateZ(6px) rotateY(-168deg)'}],{duration:560/sp,easing:'ease-in-out',fill:'forwards'});
+      leaves.forEach(function(l,i){var z=1+(4-i)*0.9;l.animate([{transform:'translateZ('+z+'px) rotateY(0deg)'},{transform:'translateZ('+z+'px) rotateY(-164deg)'}],{duration:400/sp,delay:(200+i*85)/sp,easing:'ease-in-out',fill:'forwards'})});
+      setTimeout(function(){var w=wo.animate([{opacity:0},{opacity:1}],{duration:360/sp,easing:'ease-in',fill:'forwards'});w.onfinish=next},780/sp);
     };
     setTimeout(next,3500);
   });
