@@ -1133,6 +1133,11 @@
   .issue-nav a.sk { background:#2563eb; border-color:#2563eb; }
   .issue-nav .pn { display:flex; align-items:center; gap:8px; }
   .issue-nav .off { opacity:.35; pointer-events:none; }
+  @media (max-width:540px) { .issue-nav { padding:8px 12px; gap:6px 10px; } .issue-nav a { padding:5px 11px; font-size:13px; } .issue-nav .pn { order:3; flex:1 0 100%; justify-content:center; } }
+  /* 号のページの上部は、「タイトル行（号・PDFボタン・日付とテーマ）→ 線 → 記事の札」だけにして、すっきり低くする */
+  .hero-inner { padding-top:20px; padding-bottom:14px; }
+  .main-title { margin:2px 0 8px; }
+  .issue-meta { margin-bottom:0; }
   /* 本棚の本を開いて来たときだけ、白からふわっと中身が現れる */
   html.from-book::before { content:""; position:fixed; inset:0; background:#fff; z-index:9999; pointer-events:none; animation:wo-out .8s ease .12s forwards; }
   html.from-book .hero-banner { animation:book-rise .8s ease .12s both; }
@@ -1219,16 +1224,8 @@
     <h1 class="main-title">
       週刊テック<span class="gradient-text">ナレッジ</span><span class="issue-tag">第7号</span><a class="pdf-link-hero" href="週刊テックナレッジ_第7号_20260914.pdf" download>⬅ PDF版をダウンロード</a>
     </h1>
-    <p class="lead-copy">金属加工・金型・工作機械の現場技術（テック）からAI・ロボット活用までを厳選した、モノづくり現場のための週刊ダイジェスト。多忙な現場でも3分で読めるボリュームに絞っています。新着ニュースが少ない分野は「🔰 基礎から学ぶ」記事で補っています。</p>
     <div class="issue-meta">
       <span class="tag">2026年9月14日号　研削の自動化を考える</span>
-      <span class="tag">展示用サンプル号（記事はすべて架空です）</span>
-    </div>
-    <div class="category-tags">
-      <a class="tag tag-ai" href="#sec-ai">AI・スマートファクトリー</a>
-      <a class="tag tag-robot" href="#sec-robot">ロボット・現場自動化</a>
-      <a class="tag tag-grinding" href="#sec-grinding">研削加工</a>
-      <a class="tag tag-fixture" href="#sec-fixture">ワーク固定・治具</a>
     </div>
   </div>
   <div class="rainbow-border"></div>
@@ -1472,7 +1469,7 @@
   function ease(p){return p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2}
   function camTo(y,dur){cancelAnimationFrame(cam);var s=scrollY,t0=performance.now();y=clamp(y);
     (function step(now){var p=Math.min(1,(now-t0)/dur);scrollTo({top:s+(y-s)*ease(p),left:0,behavior:'instant'});if(p<1)cam=requestAnimationFrame(step)})(t0)}
-  function finalY(){var h0=heads[0];return (h0?top(h0):top(rows[0]))-80}
+  function finalY(){return 0}   // 最後のカメラ位置は、ページの一番上（号のタイトル行が隠れない）
   function at(ms,fn){timers.push(setTimeout(fn,ms))}
   function reveal(){rows.forEach(function(r){r.style.visibility='';r.classList.remove('fx','blank')});heads.forEach(function(h){h.style.opacity=''})}
   function finish(){if(done)return;done=true;timers.forEach(clearTimeout);anims.forEach(function(a){try{a.cancel()}catch(e){}});cancelAnimationFrame(cam);reveal();evs.forEach(function(ev){removeEventListener(ev,finish)})}
